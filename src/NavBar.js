@@ -1,5 +1,5 @@
 import Reacr from "react";
-import { Box, Button, Flex, Image, Link, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Link} from "@chakra-ui/react";
 import Etherscan from "./assets/assets/social-media-icons/etherscan.png";
 import OpenSea from "./assets/assets/social-media-icons/opensea.png";
 import Twitter from "./assets/assets/social-media-icons/twitter.png";
