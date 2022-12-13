@@ -30,7 +30,7 @@ const MainMint = ({ accounts, setAccounts }) => {
   }
 
   const handleDecrement = () => {
-    if (mintAmount <= 0) return;
+    if (mintAmount <= 1) return;
     setMintAmount(mintAmount - 1);
   };
 
