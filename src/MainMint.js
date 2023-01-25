@@ -1,13 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ethers, BigNumber } from "ethers";
 import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import SwordsTest from "./SwordsTest.json";
 
-const SwordsTestAddress = "******";
+const SwordsTestAddress = "0xdB05538Caec42c3d3bD4CEEC3a33482806392710";
 
 const MainMint = ({ accounts, setAccounts }) => {
   const [mintAmount, setMintAmount] = useState(1);
+  const [minted, setMinted] = useState("");
   const isConnected = Boolean(accounts[0]);
+
+  useEffect(() => {
+    showMinted();
+  });
+
+  async function handleFreeMint() {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        SwordsTestAddress,
+        SwordsTest.abi,
+        signer
+      );
+      try {
+        const response = await contract.mintFree(BigNumber.from(2), {
+          value: ethers.utils.parseEther((0.00 * 2).toString()),
+        });
+        console.log("response: ", response);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    }
+  }
 
   async function handleMint() {
     if (window.ethereum) {
@@ -19,8 +44,8 @@ const MainMint = ({ accounts, setAccounts }) => {
         signer
       );
       try {
-        const response = await contract.mint(BigNumber.from(mintAmount), {
-          value: ethers.utils.parseEther((0.02 * mintAmount).toString())
+        const response = await contract.mint(BigNumber.from(10), {
+          value: ethers.utils.parseEther((0.00099 * 10).toString()),
         });
         console.log("response: ", response);
       } catch (err) {
@@ -29,21 +54,33 @@ const MainMint = ({ accounts, setAccounts }) => {
     }
   }
 
-  const handleDecrement = () => {
-    if (mintAmount <= 1) return;
-    setMintAmount(mintAmount - 1);
+  const showMinted = async () => {
+    if (window.ethereum) {
+      const provider = await new ethers.providers.Web3Provider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = await new ethers.Contract(
+        SwordsTestAddress,
+        SwordsTest.abi,
+        provider
+      );
+      try {
+        const minted1 = await contract.totalSupply();
+        const minted = parseInt(minted1._hex, 16);
+
+        setMinted(minted);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    }
   };
 
-  const handleIncrement = () => {
-    if (mintAmount >= 2) return;
-    setMintAmount(mintAmount + 1);
-  };
+
 
   return (
     <Flex justify="center" align="center" height="100vh" paddingBottom="150px">
       <Box width="520px">
         <div>
-          <Text  color="white" fontSize="48px"  textShadow="0 5px #000000">
+          <Text color="white" fontSize="48px" textShadow="0 5px #000000">
             Cat's Swords
           </Text>
           <Text
@@ -52,70 +89,57 @@ const MainMint = ({ accounts, setAccounts }) => {
             textShadow="0 2px 2px #000000"
             color="white"
           >
-            Cat's Swords is a collection of 3000 mighty NFT
-            swords, which will accompany valiant heroes on their quests!
+            Cat's Swords is a collection of 3000 mighty NFT swords, which will
+            accompany valiant heroes on their quests!
           </Text>
+          <Text fontSize="23px" color="white">
+            {" "}
+            {{ minted } == 3000
+              ? "Mint is over!"
+              : `Swords minted ${minted} /3000`}{" "}
+          </Text>
+          <Text
+            fontSize="30px"
+            letterSpacing="-5.5%"
+            textShadow="0 2px 2px #000000"
+            color="white"
+          ></Text>
         </div>
         {isConnected ? (
+          //Free mint
           <div>
-            <Flex align="center" justify="center">
-              <Button
-                backgroundColor="#6517D"
-                borderRadius="5px"
-                boxShadow="0px 1px 1px 1px #0F0F0F"
-                color="grey"
-                cursor="pointer"
-                fontFamily="inherit"
-                padding="11px"
-
-                fontSize='15px'
-                onClick={handleDecrement}
-              >
-                -
-              </Button>
-              <Input
-                readOnly
-                fontFamily="inherit"
-                color="black"
-                backgroundColor="#6517D"
-                width="80px"
-                height="40px"
-                textAlign='center'
-                fontSize='20px'
-                
-                margintop="10px"
-                type="number"
-                paddingLeft='17px'
-                value={mintAmount}
-              />
-              <Button
-                backgroundColor="#6517D"
-                borderRadius="5px"
-                boxShadow="0px 1px 1px 1px #0F0F0F"
-                color="grey"
-                cursor="pointer"
-                fontFamily="inherit"
-                padding="11px"
-             
-                onClick={handleIncrement}
-              >
-                +
-              </Button>
-            </Flex>
+            
             <Button
               backgroundColor="#6517D"
-              fontSize='20px'
+              fontSize="20px"
               borderRadius="5px"
               boxShadow="0px 2px 2px 1px #0F0F0F"
               color="purple"
               cursor="pointer"
               fontFamily="inherit"
               padding="15px"
-              marginTop="10px"
+              margin="10px"
+              onClick={handleFreeMint}
+            >
+              Mint 2 for free!
+            </Button>
+
+            <Button
+              backgroundColor="#6517D"
+              fontSize="20px"
+              borderRadius="5px"
+              boxShadow="0px 2px 2px 1px #0F0F0F"
+              color="purple"
+              cursor="pointer"
+              fontFamily="inherit"
+              padding="15px"
+              margin="10px"
               onClick={handleMint}
             >
-              Mint!
+              Mint 10 for .0099!
             </Button>
+
+            <Flex align="center" justify="center"></Flex>
           </div>
         ) : (
           <Text

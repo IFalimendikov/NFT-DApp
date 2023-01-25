@@ -1,9 +1,8 @@
-import Reacr from "react";
-import { Box, Button, Flex, Image, Link} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { Box, Button, Flex, Image, Link } from "@chakra-ui/react";
 import Etherscan from "./assets/assets/social-media-icons/etherscan.png";
 import OpenSea from "./assets/assets/social-media-icons/opensea.png";
 import Twitter from "./assets/assets/social-media-icons/twitter.png";
-
 
 const NavBar = ({ accounts, setAccounts }) => {
   const isConnected = Boolean(accounts[0]);
@@ -17,8 +16,12 @@ const NavBar = ({ accounts, setAccounts }) => {
     }
   }
 
+  useEffect(() => {
+    connectAccount();
+  });
+
   return (
-    <Flex  align="center" justify="right" padding="30px" >
+    <Flex align="center" justify="right" padding="30px">
       <Flex
         justify="space-around"
         align="center"
@@ -38,7 +41,9 @@ const NavBar = ({ accounts, setAccounts }) => {
         </Link>
 
         {isConnected ? (
-          <Box fontSize="25px" color="white" margin="0 15px">Connected</Box>
+          <Box fontSize="25px" color="white" margin="0 15px">
+            Connected
+          </Box>
         ) : (
           <Button
             backgroundColor="transparent"
@@ -48,7 +53,7 @@ const NavBar = ({ accounts, setAccounts }) => {
             cursor="pointer"
             fontFamily="inherit"
             padding="15px"
-            margin="0 15px" 
+            margin="0 15px"
             fontSize="20px"
             onClick={connectAccount}
           >
@@ -57,8 +62,6 @@ const NavBar = ({ accounts, setAccounts }) => {
           </Button>
         )}
       </Flex>
-
-      {/* Connect */}
     </Flex>
   );
 };
