@@ -89,14 +89,13 @@ const MainMint = ({ accounts, setAccounts }) => {
             textShadow="0 2px 2px #000000"
             color="white"
           >
-            Cat's Swords is a collection of 3000 mighty NFT swords, which will
-            accompany valiant heroes on their quests!
+            Cat's Swords is a collection of 777 NFT weapons, which will accompany mighty heroes on their quests!
           </Text>
           <Text fontSize="23px" color="white">
             {" "}
-            {{ minted } == 3000
+            {{ minted } == 777
               ? "Mint is over!"
-              : `Swords minted ${minted} /3000`}{" "}
+              : `Swords minted ${minted} /777`}{" "}
           </Text>
           <Text
             fontSize="30px"
