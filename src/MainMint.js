@@ -3,7 +3,7 @@ import { ethers, BigNumber } from "ethers";
 import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import SwordsTest from "./SwordsTest.json";
 
-const SwordsTestAddress = "0xdB05538Caec42c3d3bD4CEEC3a33482806392710";
+const SwordsTestAddress = "0x5B0c5990dD92AfE497119F83AF4C19986C92dE0b";
 
 const MainMint = ({ accounts, setAccounts }) => {
   const [mintAmount, setMintAmount] = useState(1);
