@@ -95,7 +95,7 @@ const MainMint = ({ accounts, setAccounts }) => {
             {" "}
             {{ minted } == 777
               ? "Mint is over!"
-              : `Swords minted ${minted}/ 777`}{" "}
+              : `Swords minted ${minted}/777`}{" "}
           </Text>
           <Text
             fontSize="30px"
