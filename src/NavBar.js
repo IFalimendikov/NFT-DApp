@@ -28,15 +28,15 @@ const NavBar = ({ accounts, setAccounts }) => {
         width="30%"
         padding="30px 30px 30px 30px"
       >
-        <Link href="https://www.facebook.com">
+        <Link href="https://twitter.com/SwordsNFT">
           <Image src={OpenSea} boxSize="42px" margin="0 15px" />
         </Link>
 
-        <Link href="https://www.facebook.com">
+        <Link href="https://twitter.com/SwordsNFT">
           <Image src={Twitter} boxSize="42px" margin="0 15px" />
         </Link>
 
-        <Link href="https://www.facebook.com">
+        <Link href="https://twitter.com/SwordsNFT">
           <Image src={Etherscan} boxSize="42px" margin="0 15px" />
         </Link>
 
